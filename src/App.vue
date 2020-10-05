@@ -259,7 +259,7 @@
 
         <div class="cart-main">
           <div class="cart-th clearfix">
-            <div><input type="checkbox" />全选</div>
+            <div><input type="checkbox" @change="selectAll" :checked="allBtn" />全选</div>
             <div class="">商品</div>
             <div class="">单价（元）</div>
             <div class="">数量</div>
@@ -283,15 +283,15 @@
             <div class="cart-item-list">
               <div class="cart-body">
                 <div class="cart-list">
-                  <div class="cart-item active">
+                  <div class="cart-item active" v-for="item in list" :key="item.id">
                     <ul class="goods-list yui3-g">
                       <li class="yui3-u-3-8 pr">
-                        <input type="checkbox" class="good-checkbox" />
+                        <input type="checkbox" :checked="item.isPay" @change="oneSelect(item.id, $event)" class="good-checkbox" />
                         <div class="good-item">
                           <div class="item-img">
-                            <img src="~@/assets/images/xiaomi.jpg" />
+                            <img :src="item.img" />
                           </div>
-                          <div class="item-msg">小米 CC9 屏幕指纹 3200万美颜自拍4800万超广角三摄美颜拍照二手手机 白色恋人 8GB+256GB</div>
+                          <div class="item-msg">{{ item.name }}</div>
                         </div>
                       </li>
                       <li class="yui3-u-1-8">
@@ -305,106 +305,18 @@
                         <br />
                       </li>
                       <li class="yui3-u-1-8">
-                        <span class="price">8848.00</span>
+                        <span class="price">{{ item.price }}</span>
                       </li>
                       <li class="yui3-u-1-8">
                         <div class="clearfix">
                           <a href="#" class="increment mins">-</a>
-                          <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
+                          <input autocomplete="off" type="text" :value="item.num" minnum="1" class="itxt" />
                           <a href="#" class="increment plus">+</a>
                         </div>
                         <div class="youhuo">有货</div>
                       </li>
                       <li class="yui3-u-1-8">
-                        <span class="sum">8848.00</span>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <div>
-                          <a href="#none">删除</a>
-                        </div>
-                        <div>移到我的关注</div>
-                      </li>
-                    </ul>
-                    <div class="item-line"></div>
-                  </div>
-                  <div class="cart-item active">
-                    <ul class="goods-list yui3-g">
-                      <li class="yui3-u-3-8 pr">
-                        <input type="checkbox" class="good-checkbox" />
-                        <div class="good-item">
-                          <div class="item-img">
-                            <img src="~@/assets/images/hongbaopi.jpg" />
-                          </div>
-                          <div class="item-msg">JavaScript高级程序设计 第4版(图灵出品）</div>
-                        </div>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <span>颜色: 银色</span>
-                        <br />
-                        <span>处理器: Core I5</span>
-                        <br />
-                        <span>内存: 8GB</span>
-                        <br />
-                        <span>尺寸: 13.3英寸</span>
-                        <br />
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <span class="price">91.00</span>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <div class="clearfix">
-                          <a href="#" class="increment mins">-</a>
-                          <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                          <a href="#" class="increment plus">+</a>
-                        </div>
-                        <div class="youhuo">有货</div>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <span class="sum">91.00</span>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <div>
-                          <a href="#none">删除</a>
-                        </div>
-                        <div>移到我的关注</div>
-                      </li>
-                    </ul>
-                    <div class="item-line"></div>
-                  </div>
-                  <div class="cart-item">
-                    <ul class="goods-list yui3-g">
-                      <li class="yui3-u-3-8 pr">
-                        <input type="checkbox" class="good-checkbox" />
-                        <div class="good-item">
-                          <div class="item-img">
-                            <img src="~@/assets/images/jingcui.jpg" />
-                          </div>
-                          <div class="item-msg">JavaScript语言精髓与编程实践（第3版）(博文视点出品)</div>
-                        </div>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <span>颜色: 银色</span>
-                        <br />
-                        <span>处理器: Core I5</span>
-                        <br />
-                        <span>内存: 8GB</span>
-                        <br />
-                        <span>尺寸: 13.3英寸</span>
-                        <br />
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <span class="price">128.20</span>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <div class="clearfix">
-                          <a href="#" class="increment mins">-</a>
-                          <input autocomplete="off" type="text" value="1" minnum="1" class="itxt" />
-                          <a href="#" class="increment plus">+</a>
-                        </div>
-                        <div class="youhuo">有货</div>
-                      </li>
-                      <li class="yui3-u-1-8">
-                        <span class="sum">128.20</span>
+                        <span class="sum">{{ (item.price * item.num).toFixed(2) }}</span>
                       </li>
                       <li class="yui3-u-1-8">
                         <div>
@@ -426,8 +338,7 @@
           <div class="cart-tool-left clearfix fl">
             <ul>
               <li>
-                <input type="checkbox" class="selectAll" />
-                <a href="javascript:;">全选</a>
+                <div><input type="checkbox" :checked="allBtn" @change="selectAll" />全选</div>
               </li>
               <li>
                 <a href="javascript:;">删除选中的商品</a>
@@ -760,7 +671,29 @@
     </div>
   </div>
 </template>
-
+<script>
+import { mapState } from 'vuex'
+export default {
+  data() {
+    return {}
+  },
+  methods: {
+    selectAll(e) {
+      this.$store.commit('isSelectAll', e.target.checked)
+    },
+    oneSelect(id, e) {
+      this.$store.commit('oneSelect', { id, boo: e.target.checked })
+    }
+  },
+  created() {
+    this.$store.dispatch('getShopList')
+  },
+  computed: {
+    ...mapState(['list']),
+    ...mapState(['allBtn'])
+  }
+}
+</script>
 <style lang="scss">
 @import url('~@/assets/common.css');
 @import url('~@/assets/page-cart.css');
