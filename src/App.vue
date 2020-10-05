@@ -356,8 +356,8 @@
           <div class="money-box">
             <div class="sumprice">
               <div class="sumprice-top">
-                <span>已选择<strong>0</strong> 件商品</span>
-                <span><em>总价（不含运费）：</em><i class="summoney">¥16283.00</i></span>
+                <span>已选择<strong>{{total}}</strong> 件商品</span>
+                <span><em>总价（不含运费）：</em><i class="summoney">{{amount}}</i></span>
               </div>
               <div class="sumprice-bottom">已节省：￥20.00</div>
             </div>
@@ -672,7 +672,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 export default {
   data() {
     return {}
@@ -690,7 +690,9 @@ export default {
   },
   computed: {
     ...mapState(['list']),
-    ...mapState(['allBtn'])
+    ...mapState(['allBtn']),
+    ...mapGetters(['amount']),
+    ...mapGetters(['total'])
   }
 }
 </script>

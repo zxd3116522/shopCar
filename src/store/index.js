@@ -34,5 +34,25 @@ export default new Vuex.Store({
       ctx.commit('setList', res)
     }
   },
+  getters: {
+    amount(state) {
+      let allPrice = 0
+      state.list.forEach(item => {
+        if (item.isPay) {
+          allPrice += item.num * item.price
+        }
+      })
+      return allPrice
+    },
+    total(state) {
+      let allGoods = 0
+      state.list.forEach(item => {
+        if (item.isPay) {
+          allGoods += item.num
+        }
+      })
+      return allGoods
+    }
+  },
   modules: {}
 })
