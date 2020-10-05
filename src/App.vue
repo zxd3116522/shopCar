@@ -309,9 +309,7 @@
                       </li>
                       <li class="yui3-u-1-8">
                         <div class="clearfix">
-                          <a href="#" class="increment mins">-</a>
-                          <input autocomplete="off" type="text" :value="item.num" minnum="1" class="itxt" />
-                          <a href="#" class="increment plus">+</a>
+                          <el-input-number :value="item.num" size="mini" @change="handleChange(item.id, $event)" :min="1"></el-input-number>
                         </div>
                         <div class="youhuo">有货</div>
                       </li>
@@ -356,8 +354,12 @@
           <div class="money-box">
             <div class="sumprice">
               <div class="sumprice-top">
-                <span>已选择<strong>{{total}}</strong> 件商品</span>
-                <span><em>总价（不含运费）：</em><i class="summoney">{{amount}}</i></span>
+                <span
+                  >已选择<strong>{{ total }}</strong> 件商品</span
+                >
+                <span
+                  ><em>总价（不含运费）：</em><i class="summoney">{{ amount }}</i></span
+                >
               </div>
               <div class="sumprice-bottom">已节省：￥20.00</div>
             </div>
@@ -683,6 +685,9 @@ export default {
     },
     oneSelect(id, e) {
       this.$store.commit('oneSelect', { id, boo: e.target.checked })
+    },
+    handleChange(id, val) {
+      this.$store.commit('changeCount', { id, val })
     }
   },
   created() {

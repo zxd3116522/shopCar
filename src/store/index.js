@@ -26,6 +26,10 @@ export default new Vuex.Store({
         }
       })
       state.allBtn = total === state.list.length
+    },
+    changeCount(state, params) {
+      const index = state.list.findIndex(item => item.id === params.id)
+      state.list[index].num = params.val
     }
   },
   actions: {
@@ -42,7 +46,7 @@ export default new Vuex.Store({
           allPrice += item.num * item.price
         }
       })
-      return allPrice
+      return allPrice.toFixed(2)
     },
     total(state) {
       let allGoods = 0
