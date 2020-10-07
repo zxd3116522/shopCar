@@ -1,4 +1,4 @@
-# pygvuex
+# shopCarvuex
 
 ## Project setup
 ```
